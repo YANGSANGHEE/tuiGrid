@@ -1,0 +1,5 @@
+package com.crud.crudtest.boardModel;
+
+public class boardVO {
+
+}

@@ -1,0 +1,13 @@
+package com.crud.crudtest.boardModel;
+
+
+public class boardVO {
+	public int seq;
+	public String title;
+	public String content;
+	public String userId;
+	public String userNm;
+	public String regDt;
+	public String updDt;
+	public String delYn;
+}

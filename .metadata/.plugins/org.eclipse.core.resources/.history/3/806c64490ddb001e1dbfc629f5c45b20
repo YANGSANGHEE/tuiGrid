@@ -1,0 +1,4 @@
+spring.datasource.driver.class.name = org.mariadb.jdbc.Driver
+spring.datasource.url = jdbc:mariadb:3306/crudTest
+spring.datasource.username = root
+spring.datasource.password = 0000

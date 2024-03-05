@@ -1,0 +1,10 @@
+package com.crud.crudtest.boardService;
+
+import java.util.List;
+
+import com.crud.crudtest.boardModel.boardVO;
+
+public interface boardService {
+	public List<boardVO> selectBoardList();
+	
+}

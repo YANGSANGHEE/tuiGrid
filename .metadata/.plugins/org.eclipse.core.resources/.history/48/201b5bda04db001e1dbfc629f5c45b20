@@ -1,0 +1,40 @@
+package com.crud.crudtest.boardService.Impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.crud.crudtest.boardModel.boardVO;
+import com.crud.crudtest.boardService.boardService;
+import com.crud.crudtest.mapper.boardMapper;
+
+public class boardServiceImpl implements boardService{
+	@Autowired
+	boardMapper boardmapper;
+	
+	
+	@Override
+	public List<boardVO> selectBoardList(Map<String, Object> paramMap){
+		List<boardVO> boardList = boardmapper.selectBoardList(paramMap);
+		
+		if(boardList.size() < 0) {
+			return null;
+		}
+		
+		return boardList;
+	}
+	
+	@Override
+	public int insertBoard(boardVO sBoardVO) {
+		int cnt = boardmapper.insertBoard(sBoardVO);
+		
+		return cnt;
+	}
+	
+	@Override
+	public int updateBoard(boardVO sBoardVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}

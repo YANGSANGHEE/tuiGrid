@@ -1,0 +1,12 @@
+package com.crud.crudtest.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.crud.crudtest.boardModel.boardVO;
+
+@Mapper
+public interface boardMapper {
+	List<boardVO> selectBoardList();
+}

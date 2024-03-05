@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<servers>
+  <server auto-publish-setting="2" auto-publish-time="1" com.springsource.tcserver.asf="false" com.springsource.tcserver.version="9.0.33.A.RELEASE" configuration-id="/Servers/VMware tc Server Developer Edition v4.1-config" deployDir="wtpwebapps" hostname="localhost" id="VMware tc Server Developer Edition v4.1" id-set="true" name="VMware tc Server Developer Edition v4.1" runtime-id="VMware tc Server Developer Edition (Runtime) v4.1" saveSeparateContextFiles="true" server-type="com.vmware.server.tc.90" server-type-id="com.vmware.server.tc.90" start-timeout="120" stop-timeout="15" testEnvironment="false" timestamp="0"/>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/apache-tomcat-8.5.61 at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="apache-tomcat-8.5.61 at localhost" name="apache-tomcat-8.5.61 at localhost" runtime-id="apache-tomcat-8.5.61" server-type="org.eclipse.jst.server.tomcat.85" server-type-id="org.eclipse.jst.server.tomcat.85" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="2">
+    <list key="modules" value0="crudTest::org.eclipse.jst.jee.server:crudTest::jst.web::2.5"/>
+  </server>
+</servers>

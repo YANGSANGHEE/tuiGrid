@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+C:\Users\»óÈ÷\Desktop\crudTest\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1860519279.index
+2943012779.index
+3327281649.index
+2752829578.index
+1985514523.index
+3204112716.index
+967344967.index

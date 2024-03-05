@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.crud.crudtest.mapper.boardMapper">
+	<select id="selectBoardList" parameterMap="Map" resultType="boardVO">
+		SELECT 
+			*
+		FROM tb_board
+		WHERE DEL_YN = 'N'
+		<if test="keyword != null">
+			AND TITLE LIKE CONCAT ('%',#{keyword},'%') 
+		</if>
+	</select>
+	
+	<insert id="insertBoard" parameterType="boardVO">
+		INSERT INTO
+		tb_board
+		(
+			TITLE
+			,CONTENT
+			,USER_ID
+			,USER_NM
+		)
+		VALUES
+		(
+			#{title}
+			,#{content}
+			,#{userId}
+			,#{userNm}
+		)
+	</insert>
+	
+	<update id="updateBoard" parameterType="boardVO">
+		UPDATE tb_board
+    <set>
+      <if test="username != null">username=#{username},</if>
+      <if test="password != null">password=#{password},</if>
+      <if test="email != null">email=#{email},</if>
+      <if test="bio != null">bio=#{bio}</if>
+    </set>
+	</update>
+</mapper>

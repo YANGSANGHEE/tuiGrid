@@ -1,0 +1,18 @@
+package com.crud.crudtest.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.crud.crudtest.boardModel.boardVO;
+
+@Mapper
+public interface boardMapper {
+	
+	//검색 혹은 리스트 상세
+	List<boardVO> selectBoardList(Map<String, Object> paramMap);
+	
+	//삽입
+	int insertBoard(boardVO setBoardVO);
+}

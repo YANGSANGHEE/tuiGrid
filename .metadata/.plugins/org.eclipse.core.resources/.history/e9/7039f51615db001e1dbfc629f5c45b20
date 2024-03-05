@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="/WEB-INF/config/config.properties" />
+		<property name="fileEncoding" value="UTF-8" />
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="${spring.datasource.driver.class.name}" />
+		<property name="url" value="${spring.datasource.url}" />
+		<property name="username"
+			value="${spring.datasource.username}"></property>
+		<property name="password"
+			value="${spring.datasource.password}"></property>
+	</bean>
+
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="classpath:/mybatis-config.xml" />
+		<property name="mapperLocations"
+			value="classpath:/mappers/**/*_mapper.xml" />
+	</bean>
+	
+	
+
+	<mvc:annotation-driven>
+		  <mvc:message-converters>
+  
+  <!-- 
+    이 부분은 Controller에서 일반적인 HTML을 리턴하기 위한 설정이다.
+    JSON을 리턴하지 않을 경우는 Default 값으로 지정 되어 있기 때문에 설정 할 필요 없지만,
+    JSON 리턴과 HTML 리턴을 모두 하려면은 명시적으로 설정 해 줘야 한다.
+   -->
+    <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+      <property name="supportedMediaTypes">
+        <list>
+          <value>text/html; charset=UTF-8</value>
+        </list>
+      </property>
+    </bean>
+    
+    <!--
+      Controller에서 JSON 리턴시 객체를 변환 해주기 위해서 MessageConverter가 필요하다. 
+    -->
+    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+      <property name="supportedMediaTypes">
+        <list>
+          <value>application/json; charset=UTF-8</value>
+        </list>
+      </property>
+    </bean>
+    
+  </mvc:message-converters>
+	</mvc:annotation-driven>
+	<mybatis-spring:scan
+		base-package="com.crud.crudtest.mapper" />
+
+</beans>

@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+module-start-timeout=300000
+runtimes=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<runtimes>\r\n  <runtime id\="VMware tc Server Developer Edition (Runtime) v4.1" id-set\="true" location\="C\:/Users/\uC0C1\uD788/Desktop/sts-bundle/pivotal-tc-server" name\="VMware tc Server Developer Edition (Runtime) v4.1" runtime-type-id\="com.vmware.server.tc.runtime.90" timestamp\="0"/>\r\n  <runtime id\="apache-tomcat-8.5.61" location\="C\:/Users/\uC0C1\uD788/Desktop/crudTest/apache-tomcat-8.5.61" name\="apache-tomcat-8.5.61" runtime-type-id\="org.eclipse.jst.server.tomcat.runtime.85" timestamp\="0"/>\r\n</runtimes>\r\n

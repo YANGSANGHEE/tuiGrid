@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="/WEB-INF/config/config.properties" />
+		<property name="fileEncoding" value="UTF-8" />
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="${spring.datasource.driver.class.name}" />
+		<property name="url" value="${spring.datasource.url}" />
+		<property name="username"
+			value="${spring.datasource.username}"></property>
+		<property name="password"
+			value="${spring.datasource.password}"></property>
+	</bean>
+
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="classpath:/mybatis-config.xml" />
+		<property name="mapperLocations"
+			value="classpath:/mappers/**/*_mapper.xml" />
+	</bean>
+
+	<bean
+		class="org.springframework.http.converter.StringHttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html; charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	
+	    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+      <property name="supportedMediaTypes">
+        <list>
+          <value>application/json; charset=UTF-8</value>
+        </list>
+      </property>
+    </bean>
+
+
+	<mvc:annotation-driven />
+	<mybatis-spring:scan
+		base-package="com.crud.crudtest.mapper" />
+
+</beans>

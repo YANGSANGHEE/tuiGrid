@@ -1,0 +1,6 @@
+package com.crud.crudtest.boardController;
+
+@RestCon
+public class boardRestController {
+
+}
