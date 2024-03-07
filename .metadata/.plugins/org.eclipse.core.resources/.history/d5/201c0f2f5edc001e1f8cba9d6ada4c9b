@@ -1,0 +1,212 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/mdi-style.css">
+<link rel="stylesheet" href="/css/tui-grid.css">
+<link rel="stylesheet" href="/css/tui-pagination.css">
+<link rel="stylesheet" href="/css/sub-style.css">
+<title>게시판 만들기</title>
+</head>
+<body>
+	<section class="sub-page">
+		<div class="s__container">
+			<div class="s__row">
+				<div class="rayout02">
+					<div class="board01">
+						<form>
+							<div class="border-search01">
+								<input type="text" id="searchKeyword" name="searchKeyword" type="button"/>
+								<button class="btn-main" id="searchBtn" style="margin-right: 10px">검색</button>
+								<button class="btn-main" id="deleteBtn"
+									style="margin-right: 10px" type="button">삭제</button>
+								<button class="btn-main" id="writeBtn" type="button">글작성</button>
+							</div>
+						</form>
+						<!--해당 div에 리스트를 출력해보기-->
+						<div id="grid"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="/js/jquery-1.9.1.js"></script>
+	<script src="/js/tui-pagination.js"></script>
+	<script src="/js/tui-grid.js"></script>
+	<script>
+    // 도움말
+    $(document).ready(function(){
+    	//ajax 순서대로 부르기 위해
+    	//그리드가 로딩이 된 후 삭제 이벤트 설정
+    	new Promise((resolve,reject)=>{
+    		//그리드 세팅용 ajajx
+        	$.ajax({
+        		url:"/board/selectBoardList",
+        		type:"get",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-type","application/json");
+                },
+        		success:function(data){
+        			if(data){
+        			    let grid = new tui.Grid({
+        			        el: document.getElementById("grid"),
+        			        data: data,
+        			        scrollX: true,
+        			        scrollY: false,
+        			        minBodyHeight: 30,
+        	                rowHeaders: [{
+        	                    type : 'rowNum' ,
+        	                    header : "번호",
+        	                    width : 80,
+
+        	                }],
+        			        pageOptions: {
+        			          useClient: true,
+        			          perPage: 10,
+        			        },
+        			        header: {
+        			          height: 57
+        			        },
+        			        minRowHeight: 71,
+        			        columns: [
+       			        	{
+       			        		width : 80,
+       			        		formatter:function(data){
+       			        			let html = '<input type="checkbox" name=seq value='+data.row.seq+'>'
+       			        			return html;
+       			        		}
+       			        	},
+        			          {
+        			            header: '제목',
+        			            name: 'title',
+        			            align: 'center',
+        			            formatter: function(data){
+        			            	let html = '<span style="color:red; cursor:pointer;" class="viewDetail" data-boardseq='+data.row.seq+'>'+data.row.title+'</span>'
+        			            	return html;
+        			            }
+        			          },
+        			          {
+        			            header: '작성자',
+        			            name: 'userId',
+        			            align: 'center',
+        			            width: 200,
+        			          },
+        			          {
+        			            header: '등록일',
+        			            name: 'regDt',
+        			            align: 'center',
+        			            width: 200,
+        			          },
+        			        ],
+        			      });
+        			    
+        			    
+        			    let seq = [...document.querySelectorAll("input[name=seq]")]; //checkbox
+        			   	let spanEle = [...document.querySelectorAll(".viewDetail")]; //title
+        			   	let delBtn = document.getElementById("deleteBtn"); //삭제버튼
+        			   	let writeBtn = document.getElementById("writeBtn"); // 글작성버튼
+        			   	
+        			   	writeBtn.addEventListener("click",function(){
+        			   		location.href = "/board/viewboardwrite";
+        			   	})
+        			   	
+        			   	let resolves = [seq,delBtn,grid]; //resolve에 넘길 배열
+        			   	 
+        			   	//제목 클릭시 상세로 가기 
+    					spanEle.forEach((val,idx)=>{
+    						val.addEventListener("click",function(e){
+    							let seq = e.target.dataset["boardseq"];
+    							viewDetailPage(seq);
+    						});
+    					});
+						
+        			   	//페이지 이동 함수
+    					function viewDetailPage(seq){
+    						location.href = '/board/viewboardDetail?seq='+seq;
+    					}
+    					
+        			   	//체크박스, 삭제버튼 then으로 넘기기
+    					resolve(resolves);
+    					
+        			}else{
+        				console.log("관리자에게 문의 바랍니다.");
+        			}
+        		},
+        		error: function (){
+        			console.log("관리자에게 문의 바랍니다.");
+    			}
+        	});
+    	}).then((val)=>{
+    		let seqInput = val[0]; //checkbox
+    		let delBtn = val[1]; //삭제버튼
+    		let grid = val[2]
+    		let delArr = []; //seq를 담을 배열
+    		let searchBtn = document.getElementById("searchBtn");
+    		
+    		searchBtn.addEventListener("click",function(){
+    			let searchKeyword = document.getElementById("searchKeyword");
+    			let searchVal = searchKeyword.value;
+    			
+    			console.log(searchVal);
+    		});
+			
+    		
+    		
+    		//삭제이벤트
+			delBtn.addEventListener("click",function(){
+	        	if(confirm("삭제하시겠습니까?")){
+	        		seqInput.forEach((val,idx)=>{
+	        			if(val.checked){
+	        				let seq = val.value;
+	        				delArr.push(seq);
+	        			}
+	        		});
+			
+					if(delArr.length == 0){
+						alert("삭제할 게시글을 체크해주세요.");
+						return false;
+					}
+	        		
+		        	$.ajax({
+		        		url:"/board/deleteboard",
+		        		type:"post",
+		        		data:{
+		        			delseq:delArr
+		        		},
+		        		success : function(data){
+		        			if(data > 0){
+		        				if(!alert("삭제를 완료하였습니다.")){
+		        					location.href="/board/viewBoardList";
+		        				}
+		        			}else{
+		        				alert("삭제 중 문제가 발생하였습니다.");
+		        			}
+		        		}
+		        	});
+/* 
+					 var v_ajax = new XMLHttpRequest();
+			           //v_ajax.open("메소드","주소" ,비동기여부);
+		           	 v_ajax.open("post","/board/deleteboard" ,true);
+			         v_ajax.setRequestHeader("Content-Type", "application/json");
+			         
+			           //이벤트
+			         v_ajax.onreadystatechange = function(){
+			              // 4 이거나 200 일때만 성공
+			              if(v_ajax.readyState == 4 && v_ajax.status == 200){
+			                console.log(v_ajax.responseText);
+			                // 값 나오면 여기서 작업
+			              }
+			         }
+
+		             v_ajax.send(JSON.stringify({ delseq: delArr })); */
+	        	}
+			});
+    	});
+    });
+  </script>
+</body>
+</html>

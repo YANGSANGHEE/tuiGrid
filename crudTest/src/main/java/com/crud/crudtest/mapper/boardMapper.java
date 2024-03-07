@@ -10,12 +10,15 @@ import com.crud.crudtest.boardModel.boardVO;
 @Mapper
 public interface boardMapper {
 	
-	//검색 혹은 리스트 상세
+	//검색 혹은 리스트
 	List<boardVO> selectBoardList(Map<String, Object> paramMap);
 	
+	//상세
+	Map<String,Object> selectBoardDetail(Map<String, Object> paramMap);
+	
 	//삽입
-	int insertBoard(boardVO setBoardVO);
+	int insertBoard(Map<String,Object> paramMap);
 	
 	//업데이트
-	int updateBoard(boardVO setBoardVO);
+	int updateBoard(Map<String,Object> paramMap);
 }

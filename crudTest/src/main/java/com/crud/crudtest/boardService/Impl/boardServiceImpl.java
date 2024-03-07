@@ -32,16 +32,24 @@ public class boardServiceImpl implements boardService{
 		return boardList;
 	}
 	
+	
 	@Override
-	public int insertBoard(boardVO sBoardVO) {
-		int cnt = boardmapper.insertBoard(sBoardVO);
+	public Map<String,Object> selectBoardDetail(Map<String, Object> paramMap) {
+		Map<String, Object> boardDetail = boardmapper.selectBoardDetail(paramMap);
+
+		return boardDetail;
+	}
+	
+	@Override
+	public int insertBoard(Map<String,Object> paramMap) {
+		int cnt = boardmapper.insertBoard(paramMap);
 		
 		return cnt;
 	}
 	
 	@Override
-	public int updateBoard(boardVO sBoardVO) {
-		int cnt = boardmapper.updateBoard(sBoardVO);
+	public int updateBoard(Map<String,Object> paramMap) {
+		int cnt = boardmapper.updateBoard(paramMap);
 		
 		return cnt;
 	}

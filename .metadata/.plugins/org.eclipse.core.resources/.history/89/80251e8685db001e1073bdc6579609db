@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/mdi-style.css">
+<link rel="stylesheet" href="/css/tui-grid.css">
+<link rel="stylesheet" href="/css/tui-pagination.css">
+<link rel="stylesheet" href="/css/sub-style.css">
+<title>게시판 상세임</title>
+</head>
+<body>
+	<section class="sub-page">
+		<div class="s__container">
+			<div class="s__row">
+				<h1>
+					작성자 :
+					<c:out value="${data.USER_ID}" />
+				</h1>
+				<h1>
+					작성자명 :
+					<c:out value="${data.USER_NM}" />
+				</h1>
+				<h1>
+					<c:out value="${data.TITLE}" />
+				</h1>
+				<p>
+					<c:out value="${data.CONTENT}" />
+				</p>
+				<button id="deleteBtn"
+					style="background: black; color: white; width: 100px;">삭제</button>
+				<button id="listBtn"
+					style="background: black; color: white; width: 100px;">목록</button>
+			</div>
+		</div>
+	</section>
+	<script src="/js/jquery-1.9.1.js"></script>
+	<script>
+  
+  $(document).ready(function(){
+	    let test = '<c:out value="${data}"/>'
+	        let seq = '<c:out value="${data.SEQ}"/>'
+
+	        let deleteBtn = document.getElementById("deleteBtn");
+	        let listBtn= document.getElementById("listBtn");
+	        
+	        console.log(deleteBtn);
+	        console.log(listBtn);
+	        
+	        deleteBtn.addEventListener("click",function(){
+	        	cosnole.log("삭제버튼임")
+	        });
+	        
+	        listBtn.addEventListener("click",()=>{
+	        	cosnole.log("삭제버튼임")
+	        }); 
+  });
+</script>
+</body>
+</html>

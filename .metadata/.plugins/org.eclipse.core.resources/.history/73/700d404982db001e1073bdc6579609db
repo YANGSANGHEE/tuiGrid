@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.crud.crudtest.mapper.boardMapper">
+	<select id="selectBoardList" parameterType="java.util.Map"
+		resultType="boardVO">
+		SELECT
+		*
+		FROM tb_board
+		WHERE DEL_YN = 'N'
+		<if test="keyword != null">
+			AND TITLE LIKE CONCAT ('%',#{keyword},'%')
+		</if>
+		<if test="seq != null">
+			AND SEQ = #{seq}
+		</if>
+	</select>
+
+	<select id="selectBoardDetail" parameterType="java.util.Map"
+		resultType="Map">
+		SELECT
+		*
+		FROM tb_board
+		WHERE DEL_YN = 'N'
+		<if test="keyword != null">
+			AND TITLE LIKE CONCAT ('%',#{keyword},'%')
+		</if>
+		<if test="seq != null">
+			AND SEQ = #{seq}
+		</if>
+	</select>
+
+
+	<insert id="insertBoard" parameterType="boardVO">
+		INSERT INTO
+		tb_board
+		(
+		TITLE
+		,CONTENT
+		,USER_ID
+		,USER_NM
+		)
+		VALUES
+		(
+		#{title}
+		,#{content}
+		,#{userId}
+		,#{userNm}
+		)
+	</insert>
+
+	<update id="updateBoard" parameterType="boardVO">
+		UPDATE tb_board
+		<set>
+			<if test="title != null">TITLE = #{title},</if>
+			<if test="content != null">CONTENT = #{content},</if>
+			<if test="userId != null">USER_ID = #{userId},</if>
+			<if test="userNm != null">USER_NM = #{userNm},</if>
+			<if test="delYn != null">DEL_YN = #{delYn},</if>
+			UPD_DT = CURRENT_TIMESTAMP()
+		</set>
+	</update>
+</mapper>

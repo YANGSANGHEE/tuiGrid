@@ -8,8 +8,10 @@ import com.crud.crudtest.boardModel.boardVO;
 public interface boardService {
 	public List<boardVO> selectBoardList(Map<String,Object> paramMap);
 	
-	public int insertBoard(boardVO sBoardVO);
+	public Map<String,Object> selectBoardDetail(Map<String,Object> paramMap);
 	
-	public int updateBoard(boardVO sBoardVO);
+	public int insertBoard(Map<String,Object> paramMap);
+	
+	public int updateBoard(Map<String,Object> paramMap);
 	
 }

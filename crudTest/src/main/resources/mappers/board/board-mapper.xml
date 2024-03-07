@@ -11,9 +11,24 @@
 		<if test="keyword != null">
 			AND TITLE LIKE CONCAT ('%',#{keyword},'%')
 		</if>
+		<if test="seq != null">
+			AND SEQ = #{seq}
+		</if>
 	</select>
 
-	<insert id="insertBoard" parameterType="boardVO">
+	<select id="selectBoardDetail" parameterType="Map"
+		resultType="Map">
+		SELECT
+		*
+		FROM tb_board
+		WHERE DEL_YN = 'N'
+		<if test="seq != null">
+			AND SEQ = #{seq}
+		</if>
+	</select>
+
+
+	<insert id="insertBoard" parameterType="Map">
 		INSERT INTO
 		tb_board
 		(
@@ -31,7 +46,7 @@
 		)
 	</insert>
 
-	<update id="updateBoard" parameterType="boardVO">
+	<update id="updateBoard" parameterType="Map">
 		UPDATE tb_board
 		<set>
 			<if test="title != null">TITLE = #{title},</if>
@@ -41,5 +56,6 @@
 			<if test="delYn != null">DEL_YN = #{delYn},</if>
 			UPD_DT = CURRENT_TIMESTAMP()
 		</set>
+		WHERE SEQ = #{seq}
 	</update>
 </mapper>

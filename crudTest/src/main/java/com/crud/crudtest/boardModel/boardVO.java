@@ -1,5 +1,6 @@
 package com.crud.crudtest.boardModel;
 
+import java.util.List;
 
 public class boardVO {
 	public int seq;
@@ -10,6 +11,7 @@ public class boardVO {
 	public String regDt;
 	public String updDt;
 	public String delYn;
+	public List<String> delseq;
 	
 	public int getSeq() {
 		return seq;
@@ -59,5 +61,12 @@ public class boardVO {
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
 	}
+	public List<String> getDelseq() {
+		return delseq;
+	}
+	public void setDelseq(List<String> delseq) {
+		this.delseq = delseq;
+	}
+	
 	
 }
